@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Customer name</title>
+    <link rel="stylesheet" href="/styles.css">
+
+</head>
+
+<body>
+    <%- include('./partials/navbar.ejs') %>
+
+        <div class="account">
+            <h4>Customer Details</h4>
+
+            <div class="name">
+                <p>Name: <%= customer.name %>
+                </p> <a href="">Change name</a>
+            </div>
+            <div class="cellphone">
+                <p>Cellphone: <%= customer.cellphone %>
+                </p> <a href="">Change cellphone</a>
+            </div>
+        </div>
+        <div class="seperator"></div>
+        <!-- cart customer details -->
+        <div class="customerCart">
+            <h4>
+                <%= customer.name %>'s cart
+            </h4>
+
+            <p style="margin-top: 1rem;">Total recurring cost: <%= total %> PKR </p>
+            <p style="margin-top: 0.5rem; margin-bottom: 1rem">Unique items in cart: <%= unique %>
+            </p>
+
+            <div class="cartTable">
+                <table>
+                    <thead>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Next purchase :</th>
+                        <th>Options</th>
+                    </thead>
+                    <tbody>
+                        <% for( let i=0; i < products.length; i++ ) { %>
+                            <tr>
+                                <td>
+                                    <%= products[i].product.title %>
+                                </td>
+                                <td>
+                                    <%= products[i].product.price %> PKR
+                                </td>
+                                <td>
+                                    <%= products[i].qty %>
+                                </td>
+                                <td>
+                                    <%= products[i].date %>
+                                </td>
+                                <td><button>-</button>
+                                    <button id="delItem" data-product_id="<%= products[i].product.id %> ">Remove item</button>
+                                    <button>+</button>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="seperator"></div>
+            <div class="options">
+                <button id="addProduct" data-customer_id="<%= customer.id %>">Add new product</button>
+                <button id="del" data-id="<%= customer.id %> ">Delete Customer</button>
+            </div>
+        </div>
+
+        <div class="addProduct hidden">
+            <button id="close">X</button>
+            <h3>Add product to cart</h3>
+
+            <div class="seperator"></div>
+
+            <div class="seperator"></div>
+
+            <div class="productsAdded">
+                <table>
+                    <thead>
+                        <th>title</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Next purchase date</th>
+                        <th></th>
+                    </thead>
+                    <tbody>
+                        <% for( let i=0; i < allProducts.length; i++ ) { %>
+                            <tr>
+                                <td>
+                                    <%= allProducts[i].title %>
+                                </td>
+                                <td>
+                                    <%= allProducts[i].price %> PKR
+                                </td>
+                                <td><input value=1 min=1 type="number" id="qty"></td>
+                                <td>
+                                    <input type="date" id="duedate">
+                                </td>
+                                <td><button id="add" data-product_id="<%= allProducts[i].id %> ">Add to cart</button>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="optionButtons">
+                <button id="done">Done</button>
+            </div>
+        </div>
+
+        <script>
+            const delButton = document.querySelector("#del");
+            const addProduct = document.querySelector('#addProduct');
+            const productDialog = document.querySelector(".addProduct");
+            const qtys = document.querySelectorAll('#qty');
+            const closeBtn = document.querySelector('#close');
+            const cancel = document.querySelector('#done');
+            const addButtons = document.querySelectorAll('#add')
+            const dates = document.querySelectorAll('#duedate');
+            const delItems = document.querySelectorAll('#delItem');
+
+            delButton.addEventListener('click', e => {
+                const customer_id = delButton.dataset.id;
+
+                if (window.confirm('Delete customer? cannot be undone')) {
+                    fetch(`/delCustomer?id=${customer_id}`, {
+                        method: 'DELETE',
+                        headers: { 'Content-Type': 'Application/json' }
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                window.location.href = '/customers';
+                            }
+                            else {
+                                alert('error occured while deleting')
+                            }
+                        })
+                        .catch(err => console.log(errr))
+                }
+                else {
+
+                }
+
+            })
+
+            const customer_id = addProduct.dataset.customer_id.split(' ').join('');
+            cancel.addEventListener('click', e => {
+                window.location.href = `/singleCustomer?id=${customer_id}`;
+            })
+
+
+            for (let i = 0; i < addButtons.length; i++) {
+
+                addButtons[i].addEventListener('click', e => {
+                    if (dates[i].value === '') {
+                        alert('Please select a date')
+                        return;
+                    }
+                    // getting body elements
+                    const product_id = addButtons[i].dataset.product_id.split(' ').join('');
+                    const qty = parseInt(qtys[i].value);
+                    const date = dates[i].value;
+
+                    // send request to server
+                    fetch('/addtocart', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'Application/json'
+                        },
+                        body: JSON.stringify({
+                            customer_id: customer_id,
+                            product_id: product_id,
+                            qty: qty,
+                            date: date
+                        })
+                    })
+                        .then(res => res.json())
+                        .then(data => { })
+                        .catch(err => console.log(err));
+
+                })
+            }
+
+
+
+            addProduct.addEventListener('click', e => {
+                productDialog.classList.toggle('hidden');
+                document.body.classList.toggle('parentDisable');
+            })
+
+            closeBtn.addEventListener('click', e => {
+                productDialog.classList.add('hidden');
+                document.body.classList.remove('parentDisable');
+            })
+
+
+            cancel.addEventListener('click', e => {
+                productDialog.classList.add('hidden');
+                document.body.classList.remove('parentDisable');
+            })
+
+            for (let i = 0; i < delItems.length; i ++) {
+                delItems[i].addEventListener('click', e => {
+                    const product_id = delItems[i].dataset.product_id;
+                    
+                    fetch(`/delItem?customer_id=${customer_id}&product_id=${product_id}`, {
+                        method: 'DELETE',
+                        headers: {'Content-Type': 'Application/json'}
+                    })
+                    .then(res => res.json())
+                    .then(data => window.location.href = `/singleCustomer?id=${customer_id}`)
+                    .catch(err => console.log(err));
+                })
+            }
+
+
+        </script>
+</body>
+
+</html>

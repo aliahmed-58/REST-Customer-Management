@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Customer</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+    <%- include('./partials/navbar.ejs') %>
+        <div class="wrapper">
+            <form action="/newUser" method="POST" class="newCustomer">
+                <h5 id="heading">Add new product</h5>
+                <p id="error"></p>
+                <p id="success"></p>
+                <label for="">Product title</label>
+                <input name="title" id="name" type="text">
+                <label for="">Price</label>
+                <input name="price" id="cell" type="text">
+                <button id="submitBtn">Submit</button>
+            </form>
+        </div>
+
+
+        <script>
+            const submit = document.getElementById('submitBtn');
+            const error = document.getElementById('error');
+            const success = document.getElementById('success');
+            const form = document.querySelector('form');
+
+            submit.addEventListener('click', e => {
+
+                const name = form.title.value;
+                const cell = form.price.value;
+
+                e.preventDefault();
+                fetch('/newProduct', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title: name, price: cell })
+                })
+                    .then(res => {
+                        return res.json()
+                    })
+                    .then(data => {
+                        console.log(data);
+                        if (data.error) {
+                            error.textContent = data.error;
+                        }
+                        else {
+                            success.textContent = 'Product added successfully'
+                            form.name.value = '';
+                            form.cell.value = '';
+                        }
+                    })
+                    .catch(err => console.log(err))
+
+                error.textContent = '';
+
+            })
+
+        </script>
+
+</body>
+
+</html>

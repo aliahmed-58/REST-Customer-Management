@@ -1,0 +1,389 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+}
+
+
+body::-webkit-scrollbar {
+    width: 0.75rem;
+}
+
+body::-webkit-scrollbar-track {
+    background: #1e1e24;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: #6649b8;
+}
+
+.nav1 {
+    width: 13rem;
+    height: 100vh;
+    position: fixed;
+    background-color: #108169;
+}
+
+.nav1 h1 {
+    
+    color: #f5eded;
+    text-align: center;
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+}
+
+.navlist {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.navitem {
+    width: 100%;
+}
+
+.navlink {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #f5eded;
+    height: 1.2rem;
+    padding: 1.6rem;
+}
+
+#newCustomer, #newProduct {
+    font-size: 1.3rem;
+}
+
+#newCustomer {
+    margin-top: 10px;
+    border-top: 2px solid white;
+}
+
+#newProduct {
+    border-bottom: 2px solid white;
+}
+
+.navlink:hover {
+    color: black;
+    background: white;
+}
+
+.navlink:active {
+    background: white;
+    color: black;
+}
+
+.customers {
+    /* border: 1px solid black; */
+    margin-left: 13rem;
+
+}
+
+.customers table {
+    border-collapse: collapse;
+    font-size: 1.3rem;
+    min-width: 100%;    
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.customers table thead tr  {
+    background-color: #108169;
+    text-align: center;
+    color: white;
+}
+
+.customers table th, td {
+    padding: 13px;
+    text-align: center;
+}
+
+
+.customers table tbody tr {
+    padding: 12px 15px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.customers table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.customers table tbody tr:last-of-type {
+    border-bottom: 2px solid #108169;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #108169;
+    color: white;
+    border: 1px solid #108169;
+    cursor: pointer;
+}
+
+button:hover {
+    color: black;
+    background: white;
+    transition: 0.2s all;
+}
+
+.wrapper {
+    display: flex;
+    width: 400px;
+    height: 100vh;
+    margin-left:  auto;
+    margin-right: auto;
+    padding: 2rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper form {
+    border: 1px solid #108169;
+    padding: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper form label, input {
+    margin-bottom: 10px;
+}
+
+#heading {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.wrapper form input {
+    padding: 4px;
+}
+
+.wrapper form input:focus {
+    border-width: 0px;
+}
+
+#error {
+    margin-bottom: 5px;
+    color: red;
+    font-size: 0.9rem;
+}
+
+#success {
+    margin-bottom: 5px;
+    color: #108169;
+    font-size: 0.9rerm;
+}
+
+.account {
+    margin-left: 13rem;
+    padding-top: 2rem;
+}
+
+.account h4, p, .customerCart h4, p {
+    margin-left: 1rem;
+}
+
+.account h4, .customerCart h4 {
+    font-size: 1.3rem;
+}
+
+.customerCart {
+    padding-top: 1rem;
+    margin-left: 13rem;
+}
+
+.account p {
+    padding-top: 1rem;
+    font-weight: 400;
+}
+
+.name p {
+    display: inline-block;
+}
+
+.cellphone p {
+    display: inline-block;
+}
+
+.account a {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+}
+
+.seperator {
+    border-top: 2px solid black;
+    width: 100%;
+}
+
+.cartTable table {
+    min-width: 100%;
+    border: 1px solid #108169;
+}
+.cartTable table th {
+    padding-top: 1rem;
+}
+
+.cartTable table td {
+    border-color: black;
+}
+
+.cartTable {
+    margin: 1rem;
+    height: 350px;
+    overflow-y: auto;
+}
+
+.cartTable::-webkit-scrollbar {
+    width: 0.75rem;
+}
+
+.cartTable::-webkit-scrollbar-track {
+    background: #1e1e24;
+}
+
+.cartTable::-webkit-scrollbar-thumb {
+    background: #6649b8;
+}
+
+.options {
+    margin: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.options button {
+    margin-left: 0.4rem;
+}
+
+#del {
+    background: #ff304f;
+    border: 1px solid #ff304f;
+}
+
+#del:hover {
+    background: white;
+
+}
+
+.addProduct {
+    background: white;
+    border: 2px solid #108169;
+    box-shadow: 5px 6px 22px -1px rgba(2,0,0,0.69);
+    width: 700px;
+    height: 500px;
+    position: absolute;
+    top: 15%;
+    left: 25%;
+}
+
+.addProduct h3 {
+    margin: 1rem;
+    text-align: center;
+}
+
+.addProduct h5 {
+    margin-left: 1rem;
+}
+
+.addProduct p {
+    margin-top: 1rem;
+}
+
+#close {
+    position: absolute;
+    right: 0;
+    background: red;
+    border: none;
+    top: 0;
+}
+
+#close:hover {
+    background: red;
+}
+
+
+.quantity input {
+    margin-left: 2.9rem;
+    width: 40px;
+    border: 1px solid black;
+}
+
+.quantity input:focus {
+    border: 1px solid black;
+}
+
+#add {
+    margin-left: 1.1rem;
+}
+
+.addProduct h4 {
+    margin: 1rem;
+}
+
+.productsAdded table {
+    margin-top: 0.5rem;
+    min-width: 100%;
+    font-size: 0.9rem;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.productsAdded {
+    height: 500px;
+    
+    overflow-y: auto;
+
+}
+
+.optionButtons {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin-bottom: 1rem;
+    margin-right: 10px;
+}
+
+.optionButtons #cancel {
+    background: red;
+    border: 1px solid transparent;
+}
+
+.productsAdded table td input {
+    width: 50px;
+}
+
+.search {
+    margin-left: 1rem;
+    margin-top: 0.6rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-content: center;
+    align-items: baseline;
+}
+
+.search input {
+    width: 50%;
+    padding: 3px 0px;
+}
+
+.serach input[type="text"]:focus {
+    border: none;
+    background: black;
+}
+
+#duedate {
+    width: 150px;
+}

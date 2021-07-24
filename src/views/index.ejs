@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/styles.css">
+    <title>Homepage</title>
+</head>
+
+<body>
+    <!-- navbar starts -->
+    <%- include('./partials/navbar.ejs') %> 
+    <!-- navbar ends here -->
+    
+    <!-- customer table starts here -->
+
+    <div class="customers">
+        <table >
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Cellphone</th>
+                    <th>Unique items in cart</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+           <% if (customers.length > 0) { %>
+            <tbody>
+                <% for( let i = 0; i < customers.length; i++ ) { %>
+                    <tr>
+                        <td><%= customers[i].customer.name %> </td>
+                        <td><%= customers[i].customer.cellphone %> </td>
+                        <td><%= customers[i].productsInCart %> </td>
+                        <td><button data-id="<%= customers[i].customer.id %> " id="details">Details</button></td>
+                    </tr>
+                <% } %>
+            </tbody>
+           <% } else { %>
+            <p>No customers found</p>
+            <% } %> 
+        </table>
+    </div>
+
+    <script>
+        const detailsButtons = document.querySelectorAll('#details');
+        detailsButtons.forEach(details => {
+            details.addEventListener('click', e => {
+                const customer_id = details.dataset.id;
+                window.location.href = `/singleCustomer?id=${customer_id}`
+            })
+        })
+    </script>
+
+</body>
+
+
+</html>
